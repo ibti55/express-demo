@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+    <h1>show meds </h1>
+    <form action="/show_med_list" method="get">
+    {{!-- <button type="submit">Fetch Medicines</button> --}}
+  
+        <button class="get-button" id="fetchMedicinesBtn">Fetch Medicines from db</button>
+    </form>
+    <h1>delete a medicine</h1>
+    <form action="/show_med_list" method="delete" >
+        <input placeholder="Name" name="name" type="text">
+        <br>
+        <button class="get-button" id="delete MedicinesBtn">delete Medicines from db</button>
+    </form>
+
+</body>
+</html>

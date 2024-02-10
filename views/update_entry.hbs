@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Entry</title>
+</head>
+<body>
+    <h1>Update Entry</h1>
+    <form id="updateForm" method="put">
+        <label for="oldName">Old name:</label>
+        <input type="text" id="oldName" name="oldName" required>
+        <label for="entryName">Name:</label>
+        <input type="text" id="entryName" name="entryName" required>
+        <label for="entryDosage">Dosage:</label>
+        <input type="text" id="entryDosage" name="entryDosage" required>
+        <label for="entryManufacturer">Manufacturer:</label>
+        <input type="text" id="entryManufacturer" name="entryManufacturer" required>
+        <button type="button" onclick="updateEntry()">Update</button>
+    </form>
+    <script>
+        // update-script.js
+        function updateEntry() {
+            alert("Hello! I am an alert box!!");  
+            const oldName = document.getElementById('oldName').value;
+            const entryName = document.getElementById('entryName').value;
+            const entryDosage = document.getElementById('entryDosage').value;
+            const entryManufacturer = document.getElementById('entryManufacturer').value;
+            console.log(oldName);
+            console.log(entryName);
+            console.log(entryDosage);
+            console.log(entryManufacturer);    
+            fetch(`http://localhost:3000/update_entry/${oldName}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: entryName,
+                    dosage: entryDosage,
+                    manufacturer: entryManufacturer,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Entry updated:', data);
+                // Handle success or display a message to the user
+            })
+            .catch(error => {
+                console.error('Error updating entry:', error);
+                // Handle errors or display an error message to the user
+            });
+            window.location.href = 'home';
+        }
+    </script>
+</body>
+</html>
+{{!-- const oldName = document.getElementById('oldName').value;
+            const entryName = document.getElementById('entryName').value;
+            const entryDosage = document.getElementById('entryDosage').value;
+            const entryManufacturer = document.getElementById('entryManufacturer').value;
+
+            fetch('http://localhost:3000/update_entry/', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: entryName,
+                    dosage: entryDosage,
+                    manufacturer: entryManufacturer,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Entry updated:', data);
+                // Handle success or display a message to the user
+            })
+            .catch(error => {
+                console.error('Error updating entry:', error);
+                // Handle errors or display an error message to the user
+            });
+            console.log(oldName) --}}

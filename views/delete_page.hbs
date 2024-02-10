@@ -1,0 +1,78 @@
+{{!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+    <h1>delete </h1>
+
+    <form action="/delete_page" method="delete" >
+        <input placeholder="Name" name="name" type="text">
+        <br>
+        <button class="submit-btn" type="submit">delete</button>
+    </form>
+    
+</body>
+</html> --}}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Entry by Name</title>
+</head>
+<body>
+    <h1>Delete Entry by Name</h1>
+    <form id="deleteForm" method="delete">
+        <label for="entryName">Entry Name:</label>
+        <input type="text" id="entryName" name="entryName" required>
+        <button type="button" onclick="deleteEntry()">Delete</button>
+    </form>
+    <script>
+        function deleteEntry() {
+            const entryName = document.getElementById('entryName').value;
+            
+            fetch('http://localhost:3000/delete_page/' + entryName, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Entry deleted:', data);
+                // Handle success or display a message to the user
+            })
+            .catch(error => {
+                console.error('Error deleting entry:', error);
+                // Handle errors or display an error message to the user
+            });
+            window.location.href = 'home';
+        }
+    </script>
+</body>
+</html>
+
+{{!-- const entryName = document.getElementById('entryName').value;
+
+            fetch(`/api/entries/${entryName}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Entry deleted:', data);
+                // Handle success or display a message to the user
+            })
+            .catch(error => {
+                console.error('Error deleting entry:', error);
+                // Handle errors or display an error message to the user
+            }); --}}

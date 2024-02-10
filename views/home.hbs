@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+    <h1>Home </h1>
+
+    <form action="/home" method="post" >
+        <input placeholder="Name" name="name" type="text">
+        <br>
+        <input placeholder="Dosage" name="dosage" type="text">
+        <br>
+        <input placeholder="Manufacturer" name="manufacturer" type="text">
+        <br>
+        <input class="sub" type="submit">
+    </form>
+    <form action="/delete_page" method="get">
+        <button onclick="redirectToPage1()">Go to delete page</button>
+    </form>
+    <form action="/update_entry" method="get">
+        <button onclick="redirectToPage2()">Go to update page</button>
+    </form>
+    
+
+</body>
+
+
+
+<script>
+    // JavaScript functions to handle button clicks and redirect to respective pages
+    function redirectToPage1() {
+        window.location.href = 'delete_page.hbs'; // Replace 'page1.html' with the actual URL of your first page
+    }
+
+    function redirectToPage2() {
+        window.location.href = 'update_entry.hbs'; // Replace 'page2.html' with the actual URL of your second page
+    }
+</script>
+</html>
+
+
+{{!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+    <h1>Login Form</h1>
+
+    <form action="/login" method="post" >
+        <input placeholder="Name" name="name" type="text">
+        <br>
+        <input placeholder="Password" name="password" type="password">
+        <br>
+        <input class="sub" type="submit">
+     <h3>Dont have a account ?</h3>
+    <a href="/signup">Create a new account</a>
+    </form>
+
+
+    
+</body>
+</html> --}}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Show Medicines</title>
+</head>
+<body>
+
+  <h1>Medicine List</h1>
+
+  <div id="medicinesList"></div>
+
+  <script>
+    // Make a GET request to fetch medicines
+    async function fetchMedicines() {
+      try {
+        console.log('herer')
+        const response = await fetch('/showmed');
+        const medicines = await response.json();
+
+        const medicinesListDiv = document.getElementById('medicinesList');
+        medicinesListDiv.innerHTML = '';
+
+        if (medicines.length === 0) {
+          medicinesListDiv.innerHTML = '<p>No medicines available.</p>';
+        } else {
+          const medicineListUl = document.createElement('ul');
+          medicines.forEach(medicine => {
+            const medicineItemLi = document.createElement('li');
+            // Display medicine details, adjust this based on your data structure
+            medicineItemLi.textContent = `Name: ${medicine.name}, Category: ${medicine.category}, Price: ${medicine.price}`;
+            medicineListUl.appendChild(medicineItemLi);
+          });
+          medicinesListDiv.appendChild(medicineListUl);
+        }
+      } catch (error) {
+        console.error('Error fetching medicines:', error);
+      }
+    }
+
+    // Call the function to fetch and display medicines
+    fetchMedicines();
+  </script>
+
+</body>
+</html>
