@@ -213,10 +213,9 @@ app.post('/login', async (req, res) => {
 })
 
 
-
-
-app.get('/showmed', (req, res) => {
-  res.render('showmed')
+app.get('/dashboard_view_stock', (req, res) => {
+  console.log('hererer')
+  res.render('dashboard_view_stock')
 })
 
 app.get('/show_med_list', async (req, res) => {
