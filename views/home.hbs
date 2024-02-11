@@ -109,10 +109,10 @@
           </a>
         </li>
         <li>
-            {{!-- <form action="/dashboard_view_stock" method="get"> --}}
+            <form action="/dashboard_products" method="get">
                 <button onclick="redirectToPage2()">Products</button>
-            {{!-- </form> --}}
-          {{!-- <a href="dashboard_view_stock.hbs">
+            </form>
+          {{!-- <a href="dashboard_products.hbs">
             <i class="bx bxs-group"></i>
             <span class="text">Products</span>
           </a> --}}
@@ -315,7 +315,7 @@
     }) --}}
 
     function redirectToPage2() {
-        window.location.href = 'dashboard_view_stock.hbs'; // Replace 'page2.html' with the actual URL of your second page
+        window.location.href = 'dashboard_products.hbs'; // Replace 'page2.html' with the actual URL of your second page
     }
 </script>
 </html>

@@ -4,32 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Button Navigation</title>
-  <!-- Boxicons -->
-  <link
-    href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
-    rel="stylesheet"
-  />
-  <!-- My CSS -->
   <link rel="stylesheet" href="dashboard_products.css" />
 </head>
 <body>
   <div class="container">
     <h1 class="heading">Products</h1>
     <div class="button-container">
-      <form action="/dashboard_view_stock" method="get">
-          <button id="view-stock" onclick="redirectToPage2()">View Stock</button>
-      </form>
-      
+      <button id="view-stock">View Stock</button>
       <button id="update-stock">Update Stock</button>
       <button id="add-product">Add Product</button>
       <button id="remove-product">Remove Product</button>
     </div>
   </div>
 
-  <script>
-    function redirectToPage2() {
-        window.location.href = 'dashboard_view_stock.hbs'; // Replace 'page2.html' with the actual URL of your second page
-    }
-  </script>
+  <script src="dashboard_products.js"></script>
 </body>
 </html>

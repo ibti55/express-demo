@@ -116,7 +116,7 @@ const database = client.db();
 //   console.log('Connection closed');
 // }
 
-const MedicineCollection = database.collection('medicinecollections');
+const MedicineCollection = database.collection('medicineStock');
 const loginCollection = database.collection('newUserCollection');
 
 async function insertMedicine({ name, dosage, manufacturer }) {
@@ -213,10 +213,10 @@ app.post('/login', async (req, res) => {
 })
 
 
-app.get('/dashboard_view_stock', (req, res) => {
-  console.log('hererer')
-  res.render('dashboard_view_stock')
-})
+// app.get('/dashboard_view_stock', (req, res) => {
+//   console.log('hererer')
+//   res.render('dashboard_view_stock')
+// })
 
 app.get('/show_med_list', async (req, res) => {
   const MedicineCollection = database.collection('medicinecollections');
@@ -303,6 +303,22 @@ app.post('/login', async (req, res) => {
       res.send("wrong details")
     }
 })
+
+app.get('/dashboard_products', async (req, res) => {
+  res.render('dashboard_products')
+})
+
+app.get('/dashboard_view_stock', async (req, res) => {
+  try {
+    const medicines = await MedicineCollection.find();
+    const documents = await medicines.toArray();
+    console.log('All documents in the collection:', documents);
+    res.json(documents);
+    // res.render('dashboard_view_stock', { documents });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 app.get('/home', async (req, res) => {
   res.render('home')

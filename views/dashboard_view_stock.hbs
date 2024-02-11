@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,33 +7,63 @@
     <link rel="stylesheet" href="dashboard_view_stock_style.css" />
   </head>
   <body>
+    <h1>Medicine List</h1>
+    <div id="medicinesData" data-medicines='<%= JSON.stringify(medicines) %>'></div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const medicinesDataElement = document.getElementById('medicinesData');
+        const medicinesData = JSON.parse(medicinesDataElement.getAttribute('data-medicines'));
+
+        // Display the medicines data on the page as needed
+        console.log(medicinesData);
+      });
+    </script>
+  </body>
+</html> --}}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Medicine Stock</title>
+    <link rel="stylesheet" href="dashboard_view_stock_styles.css" />
+  </head>
+  <body>
     <div class="container">
       <h2>View Medicine Stock</h2>
+      <div id="searchAndFilterContainer">
+        <div id="searchContainer">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search for medicine..."
+          />
+        </div>
+        <div id="filterContainer">
+          <select id="filterSelect">
+            <option value="all">All</option>
+            <option value="lowStock">Low Stock</option>
+            <option value="outOfStock">Out of Stock</option>
+          </select>
+        </div>
+      </div>
       <div id="medicineList">
-        <h3>Medicine Stock:</h3>
         <table id="medicines">
           <tr>
             <th>Medicine ID</th>
             <th>Medicine Name</th>
             <th>Generic Name</th>
             <th>Quantity</th>
-            <th>Action</th>
           </tr>
-          <!-- Medicine list will be dynamically populated here -->
-          <tr>
-            <td>1234</td>
-            <td>Paracetamol</td>
-            <td>Acetaminophen</td>
-            <td>100</td>
-            <td>
-              <a href="dashboard_update_stock.hbs" class="update-btn"
-                >Update</a
-              >
-            </td>
-          </tr>
-          <!-- Add more rows as needed -->
         </table>
       </div>
+      <div id="pagination">
+        <button id="prevPage">Previous Page</button>
+        <button id="nextPage">Next Page</button>
+      </div>
     </div>
+
+    <script src="dashboard_view_stock_scripts.js"></script>
   </body>
 </html>
