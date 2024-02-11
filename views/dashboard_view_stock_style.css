@@ -1,81 +1,22 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+#medicineContainer {
+  width: 80%;
+  margin: 20px auto;
 }
 
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #d1c3c3;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.medicineCard {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
-h2 {
-    text-align: center;
-    color: #358688;
+.medicineName {
+  font-weight: bold;
 }
 
-#searchAndFilterContainer {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  #searchContainer,
-  #filterContainer {
-    width: 48%; /* Adjust as needed */
-  }
-  
-  #searchContainer input[type="text"],
-  #filterContainer select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-
-#medicineList {
-    margin-bottom: 20px;
+.genericName {
+  color: #666;
 }
 
-#medicines {
-    width: 100%;
-    border-collapse: collapse;
+.quantity {
+  color: green;
 }
-
-#medicines th,
-#medicines td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #176518;
-}
-
-#medicines th {
-    background-color: #4CAF50;
-    color: white;
-}
-
-#pagination {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  #pagination button {
-    padding: 8px 16px;
-    margin: 0 5px;
-    background-color: #616e4d;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  #pagination button:hover {
-    background-color: #0056b3;
-  }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #medicineContainer {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .medicineCard {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .medicineName {
+            font-weight: bold;
+        }
+
+        .genericName {
+            color: #666;
+        }
+
+        .quantity {
+            color: green;
+        }
+    </style>
+    <title>Medicine List</title>
+</head>
+<body>
+    <div id="medicineContainer"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const medicineContainer = document.getElementById("medicineContainer");
+            console.log('hvhjv')
+            // Fetch medicine data from the server
+            fetch('/demo')
+                .then(response => response.json())
+                .then(medicineData => {
+                    console.log('hvhjv')
+                    // Loop through the medicineData array and create HTML cards for each medicine
+                    medicineData.forEach(medicine => {
+                        const medicineCard = document.createElement("div");
+                        medicineCard.classList.add("medicineCard");
+
+                        const medicineName = document.createElement("div");
+                        medicineName.classList.add("medicineName");
+                        medicineName.textContent = `Medicine Name: ${medicine.medicine_name}`;
+
+                        const genericName = document.createElement("div");
+                        genericName.classList.add("genericName");
+                        genericName.textContent = `Generic Name: ${medicine.generic_name}`;
+
+                        const quantity = document.createElement("div");
+                        quantity.classList.add("quantity");
+                        quantity.textContent = `Quantity: ${medicine.quantity}`;
+
+                        medicineCard.appendChild(medicineName);
+                        medicineCard.appendChild(genericName);
+                        medicineCard.appendChild(quantity);
+
+                        medicineContainer.appendChild(medicineCard);
+                    });
+                })
+                .catch(error => console.error('Error fetching medicine data:', error));
+
+        });
+    </script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  (async () => {
     const table = document.getElementById('medicines');
     const searchInput = document.getElementById('searchInput');
     const filterSelect = document.getElementById('filterSelect');
@@ -8,16 +9,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const ITEMS_PER_PAGE = 10;
     let currentPage = 1;
 
-    function populateTable(pageNumber,filteredData) {
-      table.innerHTML = `<tr>
-      <th>Order ID</th>
-      <th>Order Time</th>
-      <th>Order Status</th>
-      <th>Order Amount</th>
-  </tr>`;
+    async function fetchData() {
+      try {
+        const response = await fetch('http://localhost:3000/dashboard_view_stock');
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        return [];
+      }
+    }
+
+    async function populateTable(pageNumber, filteredData) {
       const startIndex = (pageNumber - 1) * ITEMS_PER_PAGE;
       const endIndex = startIndex + ITEMS_PER_PAGE;
       const pageData = filteredData.slice(startIndex, endIndex);
+
+      table.innerHTML = `<tr>
+        <th>Medicine ID</th>
+        <th>Medicine Name</th>
+        <th>Generic Name</th>
+        <th>Quantity</th>
+      </tr>`;
+
       pageData.forEach(medicine => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -28,15 +42,20 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         table.appendChild(row);
       });
-        updatePaginationButtons();
+
+      updatePaginationButtons();
     }
-  
-    function filterAndPaginate(searchTerm, filterValue) {
+
+    async function filterAndPaginate(searchTerm, filterValue) {
+      console.log('sfsdkbjfdsjkfbdskj')
+      const medicineData = await fetchData();
+
       let filteredData = medicineData.filter(medicine => {
         const idMatch = medicine.medicine_id.toLowerCase().includes(searchTerm.toLowerCase());
         const nameMatch = medicine.medicine_name.toLowerCase().includes(searchTerm.toLowerCase());
         const genericMatch = medicine.generic_name.toLowerCase().includes(searchTerm.toLowerCase());
         const quantityMatch = medicine.quantity.toString().includes(searchTerm.toLowerCase());
+
         if (filterValue === 'lowStock') {
           return (idMatch || nameMatch || genericMatch || quantityMatch) && medicine.quantity < 50;
         } else if (filterValue === 'outOfStock') {
@@ -45,49 +64,51 @@ document.addEventListener('DOMContentLoaded', () => {
           return idMatch || nameMatch || genericMatch || quantityMatch;
         }
       });
+
       populateTable(currentPage, filteredData);
     }
 
     function updatePaginationButtons() {
-        if (currentPage === 1) {
-            prevPageButton.style.display = 'none';
-        } else {
-            prevPageButton.style.display = 'inline-block';
-        }
-    
-        const totalPages = Math.ceil(medicineData.length / ITEMS_PER_PAGE);
-        if (currentPage === totalPages || totalPages === 0) {
-            nextPageButton.style.display = 'none';
-        } else {
-            nextPageButton.style.display = 'inline-block';
-        }
-        }
-  
+      if (currentPage === 1) {
+        prevPageButton.style.display = 'none';
+      } else {
+        prevPageButton.style.display = 'inline-block';
+      }
+
+      const totalPages = Math.ceil(medicineData.length / ITEMS_PER_PAGE);
+      if (currentPage === totalPages || totalPages === 0) {
+        nextPageButton.style.display = 'none';
+      } else {
+        nextPageButton.style.display = 'inline-block';
+      }
+    }
+
     // Initial population of the table
-    filterAndPaginate('', 'all');
-  
+    await filterAndPaginate('', 'all');
+
     // Event listeners for search and filter
     searchInput.addEventListener('input', () => {
-        filterAndPaginate(searchInput.value, filterSelect.value);
-    });
-  
-    filterSelect.addEventListener('change', () => {
-        filterAndPaginate(searchInput.value, filterSelect.value);
+      filterAndPaginate(searchInput.value, filterSelect.value);
     });
 
-        // Event listeners for pagination
-        prevPageButton.addEventListener('click', () => {
-            if (currentPage > 1) {
-              currentPage--;
-              filterAndPaginate(searchInput.value, filterSelect.value);
-            }
-          });
-        
-          nextPageButton.addEventListener('click', () => {
-            const totalPages = Math.ceil(medicineData.length / ITEMS_PER_PAGE);
-            if (currentPage < totalPages) {
-              currentPage++;
-              filterAndPaginate(searchInput.value, filterSelect.value);
-            }
-          });
-  });
+    filterSelect.addEventListener('change', () => {
+      filterAndPaginate(searchInput.value, filterSelect.value);
+    });
+
+    // Event listeners for pagination
+    prevPageButton.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        filterAndPaginate(searchInput.value, filterSelect.value);
+      }
+    });
+
+    nextPageButton.addEventListener('click', () => {
+      const totalPages = Math.ceil(medicineData.length / ITEMS_PER_PAGE);
+      if (currentPage < totalPages) {
+        currentPage++;
+        filterAndPaginate(searchInput.value, filterSelect.value);
+      }
+    });
+  })();
+});

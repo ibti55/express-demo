@@ -133,7 +133,9 @@ async function insertMedicine({ name, dosage, manufacturer }) {
 const bodyParser = require("body-parser"); 
 const express = require("express")
 const path = require("path")
+const cors = require('cors');
 const app = express()
+app.use(cors());
 app.use(bodyParser.json());
 
 const port = process.env.PORT || 3000
@@ -304,16 +306,60 @@ app.post('/login', async (req, res) => {
     }
 })
 
+const fs = require('fs');
+const html = fs.readFileSync('./views/dashboard_view_stock.hbs', 'utf-8')
+let medicineListHtml = fs.readFileSync('./views/product_list.hbs', 'utf-8');
+
+const medicines = MedicineCollection.find({}).project({ _id: 0 });
+//console.log(medicines)
+
+async function replaceHtml(template, medicine){
+    let output = template.replace('{{%ID%}}', medicine.medicine_id);
+    output = output.replace('{{%NAME%}}', medicine.medicine_name);
+    output = output.replace('{{%MODELNAME%}}', medicine.generic_name);
+    output = output.replace('{{%SIZE%}}', medicine.quantity);
+    //console.log(output)
+    return output;
+}
+
+// let productHtmlArray = medicines.map((medicine) => {
+//     let output = medicineListHtml.replace('{{%ID%}}', medicine.medicine_id);
+//     output = output.replace('{{%NAME%}}', medicine.medicine_name);
+//     output = output.replace('{{%MODELNAME%}}', medicine.generic_name);
+//     output = output.replace('{{%SIZE%}}', medicine.quantity);
+    
+//     return output;
+// })
+// productHtmlArray = productHtmlArray.toArray();
+
+
 app.get('/dashboard_products', async (req, res) => {
   res.render('dashboard_products')
 })
 
+
+// app.get('/demo', async (req, res) => {
+//   res.render('demo')
+// })
+
 app.get('/dashboard_view_stock', async (req, res) => {
   try {
-    const medicines = await MedicineCollection.find();
-    const documents = await medicines.toArray();
-    console.log('All documents in the collection:', documents);
-    res.json(documents);
+    //const medicines = await MedicineCollection.find();
+    const medicines = await MedicineCollection.find({}).project({ _id: 0 });
+    //const medicines = await MedicineCollection.find({}, { medicine_id: 1, medicine_name: 1, generic_name: 1, quantity: 1 }).sort({ createdAt: -1 });
+    let productHtmlArray = await medicines.map((product) => {
+      //console.log(product)
+        return replaceHtml(medicineListHtml, product);
+    })
+    //console.log(productHtmlArray)
+    let productResponseHtml = html.replace('{{%CONTENT%}}', (await productHtmlArray.toArray()).join(' '));
+    res.writeHead(200, {'Content-Type': 'text/html' });
+    res.end(productResponseHtml);
+    //const documents = await medicines.toArray();
+    //console.log(medicines);
+    // res.header('Content-Type', 'application/json');
+    // res.send(medicines);
+    //res.send(medicines);
     // res.render('dashboard_view_stock', { documents });
   } catch (error) {
     res.status(500).json({ error: error.message });
